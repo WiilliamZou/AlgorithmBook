@@ -3,50 +3,51 @@ import java.util.Iterator;
 /**
  * Created by yunxiaozou on 4/12/16.
  */
-public class Queue<Item> {
-    private Node first;
-    private Node last;
+public class Stack<Item> {
+    private DoubleLinkedNode first;
+    private DoubleLinkedNode last;
     private int N;
 
-    private class Node {
+    private class DoubleLinkedNode {
         Item item;
-        Node next;
+        DoubleLinkedNode prev;
+        DoubleLinkedNode next;
     }
-
     public boolean isEmpty() {return first == null;}
     public int size() {return N;}
 
-    public void enqueue(Item item) {
-        Node oldlast = last;
-        last = new Node();
+    public void push(Item item) {
+        DoubleLinkedNode oldlast = last;
+        last = new DoubleLinkedNode();
         last.item = item;
+        last.prev = oldlast;
         last.next = null;
         if (isEmpty()) first = last;
         else           oldlast.next = last;
         N++;
     }
 
-    public Item dequeue() {
+    public Item pop() {
         if (isEmpty()) return null;
-        Item item = first.item;
-        first = first.next;
+        Item item = last.item;
+        first.next = first;
         if (isEmpty()) last = null;
         N--;
         return item;
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator();
+        return new ReverseListIterator();
     }
 
-    private class ListIterator implements  Iterator<Item> {
-        private Node current = first;
+    private class ReverseListIterator implements Iterator<Item> {
+        private DoubleLinkedNode current = last;
         public boolean hasNext() {
             return current != null;
         }
         public Item next() {
             Item item = current.item;
-            current = current.next;
+            current = current.prev;
             return item;
         }
     }
