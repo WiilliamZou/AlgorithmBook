@@ -27,11 +27,13 @@ public class BinarySearch {
 
         int[] whitelist = In.readInts(args[0]);
         int[] numbers = In.readInts(args[1]);
+        long count = 0;
         Arrays.sort(whitelist);
         for (int num : numbers) {
             if (rank(num, numbers) < 0)
-                System.out.println(num);
+                count++;
         }
+        System.out.println(count);
 
     }
 }
