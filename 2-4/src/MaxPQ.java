@@ -6,7 +6,7 @@ public class MaxPQ <Key extends Comparable<Key>> {
     private int N = 0;
 
     public MaxPQ(int maxN) {
-        pq = (Key[]) new Comparable[maxN+1]; // 为了代码的方便, pq 从1开始.
+        pq = (Key[]) new Comparable[maxN+1]; // one based.
     }
 
     public boolean isEmpty() {
@@ -49,12 +49,11 @@ public class MaxPQ <Key extends Comparable<Key>> {
     }
     private void sink(int k) {
         while (2 * k <= N) {
-            int j = 2 * k;
-            if (j < N && less(j, j+1)) j++;
+            int j = 2 * k;   // left child
+            if (j < N && less(j, j+1)) j++; // if approriate, go to right child.
             if (!less(k, j)) break;
             exch(k, j);
             k = j;
         }
     }
-
 }
