@@ -15,18 +15,33 @@ public class Quick {
         sort(a, j+1, hi);
     }
     private static int partition(Comparable[] a, int lo, int hi) {
-        int i = lo, j = hi+1;
+        int left = lo, right = hi+1;
         Comparable v = a[lo];
         while(true) {
-            while(less(a[++i], v))
-                if (i == hi) break;
-            while(less(v, a[--j]))
-                if (j == lo) break;
-            if (i >= j) break;
-            exch(a, i, j);
+            while(less(a[++left], v))
+                if (left == hi) break;
+            while(less(v, a[--right]))
+                if (right == lo) break;
+            if (left >= right) break;
+            exch(a, left, right);
         }
-        exch(a, lo, j);
-        return j;
+        exch(a, lo, right);
+        return right;
+    }
+    private static int partition2(Comparable[] a, int lo, int hi) {
+        int left = lo, right = hi;
+        int i = lo;
+        Comparable v = a[lo];
+        while (i <= right) {
+            if (a[i].compareTo(v) < 0) {
+                exch(a, left++, i++);
+            } else if (a[i].compareTo(v) > 0) {
+                exch(a, i, right--);
+            } else {
+                i++;
+            }
+        }
+        return right;
     }
 
     private static void exch(Comparable[] a, int i, int j) {

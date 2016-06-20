@@ -8,7 +8,7 @@ public class Heapsort {
         for (int k = N/2; k >= 1; k--)
             sink(a, k, N); //construct a heap.
         while (N > 1) {
-            exch(a, 1, N--);
+            exch(a, 1, N--);// put the max of heap to the end of array.
             sink(a, 1, N);
         }
     }
